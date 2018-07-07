@@ -1,26 +1,6 @@
 <template>
   <div class="row ">
     <div class="col-12">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-            <ul class="nav">
-
-                <li class="nav-item">
-                  <router-link to="/" class="nav-link">Home</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/store" class="nav-link" >Stores</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/store/new" class="nav-link">New Store</router-link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="row py-3">
         <div class="col-12">
           <div class="card">
@@ -28,16 +8,7 @@
             <div class="card-body">
               <h5 class="card-title  text-center"></h5>
               <div class="card-text">
-                <form>
-                  <div class="form-group">
-                    <label for="">Name</label>
-                    <input type="text" class="form-control" v-model="store.name">
-                  </div>
-                  <div class="form-group">
-                    <label for="">Address</label>
-                    <input type="text" class="form-control" v-model="store.address">
-                  </div>
-                </form>
+                <form-partial v-bind:store_prop="store"></form-partial>
               </div>
             </div>
             <div class="card-footer">
@@ -46,7 +17,7 @@
                   <button class="btn btn-outline-success" v-on:click="putStore">Submit</button>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-6 col-6">
-                  <router-link :to="'/store/'+store.id" class="btn btn-outline-success">Show Store</router-link>
+                  <router-link :to="'/store/'+store.id" class="btn btn-outline-secondary">Back</router-link>
                 </div>
               </div>
             </div>
@@ -59,6 +30,7 @@
 
 <script>
   import axios from 'axios';
+  import formPartial from './partial/form'
 
   export default {
     name: 'edit-store',
@@ -106,8 +78,11 @@
         axios.request(configAxios).then((response) => {
           this.stores = response.data.stores;
         });
-        this.store = {};
+        //this.store = {};
       }
+    },
+    components:{
+      formPartial
     }
   }
 </script>

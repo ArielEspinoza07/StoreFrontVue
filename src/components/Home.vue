@@ -1,21 +1,27 @@
 <template>
   <div class="row ">
     <div class="col-12">
-      <div class="row">
-        <div class="col-12">
+      <div class="card-deck">
+        <div class="col-lg-4 col-md-6 col-sm-12 col-12 py-2" v-for="article in articles" :key="article.id">
           <div class="card">
+            <div class="card-header text-center">{{article.name}}</div>
             <div class="card-body">
-              <ul class="nav">
-                <li class="nav-item">
-                  <router-link to="/" class="nav-link">Home</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/store" class="nav-link" >Stores</router-link>
-                </li>
-                <li class="nav-item">
-                  <router-link to="/store/new" class="nav-link">New Store</router-link>
-                </li>
-              </ul>
+              <div class="card-text">
+                <div class="row">
+                  <div class="col-12">
+                    <p>Description: {{article.description}}
+                    </p>
+                  </div>
+                  <div class="col-12">
+                    <p>Price: ${{article.price}}</p>
+                  </div>
+                  <div class="col-12">
+                    <p>Available: {{article.total_in_vault}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
             </div>
           </div>
         </div>
@@ -25,15 +31,39 @@
 </template>
 
 <script>
-  //import Stores from './Store/Stores'
+  import axios from 'axios';
+
   export default {
     name: 'home',
     data () {
       return {
+        articles:[]
+      }
+    },
+    mounted() {
+      this.getArticles();
+    },
+    methods: {
+      getArticles(){
+        const configAxios = {
+          url:'http://store-api.local/api/v1/services/articles',
+          method:'get',
+          responseType:'json',
+          data:{},
+          headers:{
+            'Content-Type':'application/json',
+          },
+          auth:{
+            username: 'my_email',
+            password: '12345'
+          }
+        };
+        axios.request(configAxios).then( (response) => {
+          this.articles = response.data.articles;
+        });
       }
     },
     components:{
-      //Stores
     }
   }
 </script>

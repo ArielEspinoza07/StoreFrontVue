@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import Stores from '@/components/Store/Stores'
-import NewStore from '@/components/Store/NewStore'
-import EditStore from '@/components/Store/EditStore'
-import ShowStore from '@/components/Store/ShowStore'
+
+import Stores from '@/components/Store/Index'
+import NewStore from '@/components/Store/New'
+import EditStore from '@/components/Store/Edit'
+import ShowStore from '@/components/Store/Show'
+
+import NewArticle from '@/components/Article/New'
+import EditArticle from '@/components/Article/Edit'
 
 Vue.use(Router)
 
@@ -35,16 +39,16 @@ export default new Router({
       name:'show-store',
       component:ShowStore
     },
-    // {
-    //   path:'/store/:id/article/new',
-    //   name:'new-article',
-    //   component:NewArticle
-    // },
-    // {
-    //   path:'/store/article/edit/:id',
-    //   name:'edit-article',
-    //   component:EditArticle
-    // }
+    {
+      path:'/store/:id/article/new',
+      name:'new-article',
+      component:NewArticle
+    },
+    {
+      path:'/store/article/edit/:id',
+      name:'edit-article',
+      component:EditArticle
+    }
   ],
   mode:'history'
 })
