@@ -1,6 +1,6 @@
 # store-vue
 
-> A Vue.js project
+ A Vue.js project that use <a href="https://github.com/ArielEspinoza07/StoreApi">Store Api</a> data
 
 ## Build Setup
 
