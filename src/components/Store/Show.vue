@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <articles ></articles>
+      <articles v-bind:articles_props="store.articles"></articles>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@
     methods: {
       getStore(){
         const configAxios = {
-          url:'http://store-api.local/api/v1/services/stores/'+this.$route.params.id,
+          url:'http://store-api.local/api/v1/services/stores/'+this.$route.params.id+'/articles',
           method:'get',
           responseType:'json',
           data:{},

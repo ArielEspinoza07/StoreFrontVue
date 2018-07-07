@@ -2,7 +2,7 @@
   <div class="row py-2">
     <div class="col-12">
       <div class="card-deck">
-        <div class="col-lg-4 col-md-6 col-sm-6 col-12 py-2" v-for="article in articles" :key="article.id">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12 py-2" v-for="article in articles_props" :key="article.id">
           <div class="card">
             <div class="card-header text-center">{{article.name}}</div>
             <div class="card-body">
@@ -45,36 +45,20 @@
 </template>
 
 <script>
-  import axios from 'axios';
   export default {
     name: 'articles',
+    props:{
+      articles_props:{
+        type:Array
+      }
+    },
     data() {
       return {
-        articles: []
       }
     },
     mounted() {
-      this.getArticles();
     },
     methods: {
-      getArticles() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.id + '/articles',
-          method: 'get',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        axios.request(configAxios).then((response) => {
-          this.articles = response.data.store.articles;
-        });
-      }
     }
   }
 </script>
