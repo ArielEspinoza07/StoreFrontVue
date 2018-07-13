@@ -83,66 +83,25 @@
       }
     },
     mounted() {
-      this.getStore();
       this.getArticle();
     },
     methods: {
-      getStore() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.storeId,
-          method: 'get',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          this.store = response.data.data.store;
-        });
-      },
       getArticle() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/articles/' + this.$route.params.id,
-          method: 'get',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          this.article = response.data.data.article;
-        });
+        this.$articleService.getArticle(this.$route.params.id)
+          .then(response => {
+            if(response !== undefined){
+              this.article = response.data.data.article;
+              this.store = this.article.store;
+            }
+          });
       },
       putArticle() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/articles/'+this.$route.params.id,
-          method: 'put',
-          responseType: 'json',
-          data: this.article,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          this.article = response.data.data.article;
-          this.$router.push('/store/' + this.article.store_id);
-          swal('Success','Article updated successfully','success');
-        });
-        //this.store = {};
+        this.$articleService.putArticle(this.$route.params.id,this.article)
+          .then(response => {
+            this.article = response.data.data.article;
+            this.$router.push('/store/' + this.article.store_id);
+            swal('Success','Article updated successfully','success');
+          });
       }
     },
     components: {

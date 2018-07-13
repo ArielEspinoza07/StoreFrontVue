@@ -84,44 +84,20 @@
     },
     methods: {
       getStore() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.id,
-          method: 'get',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          this.store = response.data.data.store;
-        });
+        this.$storeService.getStore(this.$route.params.id)
+          .then(response => {
+            this.store = response.data.data.store;
+          });
       },
       postArticle() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/articles',
-          method: 'post',
-          responseType: 'json',
-          data: this.article,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          this.article = {
-            store_id:this.$route.params.id
-          };
-          this.$router.push('/store/' + this.article.store_id);
-          swal('Success','Article created successfully','success');
-        });
+        this.$articleService.postArticle(this.article)
+          .then(response => {
+            this.article = {
+              store_id:this.$route.params.id
+            };
+            this.$router.push('/store/' + this.article.store_id);
+            swal('Success','Article created successfully','success');
+          });
       }
     },
     components: {

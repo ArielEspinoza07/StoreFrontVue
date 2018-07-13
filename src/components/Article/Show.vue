@@ -95,49 +95,15 @@
       }
     },
     mounted() {
-      this.getStore();
       this.getArticle();
     },
     methods: {
-      getStore() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.storeId,
-          method: 'get',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios)
-          .then((response) => {
-            if(response !== undefined){
-              this.store = response.data.data.store;
-            }
-          });
-      },
       getArticle() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/articles/' + this.$route.params.id,
-          method: 'get',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios)
-          .then((response) => {
+        this.$articleService.getArticle(this.$route.params.id)
+          .then(response => {
             if(response !== undefined){
               this.article = response.data.data.article;
+              this.store = this.article.store;
             }
           });
       },
@@ -164,20 +130,8 @@
           });
       },
       deleteArticle(article) {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/articles/' + article.id,
-          method: 'delete',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
+        this.$articleService.deleteArticle(article.id)
+          .then(response => {
           this.store = response.data.data.store;
           this.$router.push('/store/' + this.$route.params.storeId);
         });

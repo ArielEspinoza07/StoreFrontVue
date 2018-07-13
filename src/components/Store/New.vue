@@ -41,24 +41,12 @@
     },
     methods: {
       postStore() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores',
-          method: 'post',
-          responseType: 'json',
-          data: this.store,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          this.store = {};
-          this.$router.push('/store');
-          swal('Success','Store created successfully','success');
-        });
+        this.$storeService.postStore(this.store)
+          .then(response => {
+            this.store = {};
+            this.$router.push('/store');
+            swal('Success','Store created successfully','success');
+          });
 
       }
     },

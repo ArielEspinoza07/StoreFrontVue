@@ -47,6 +47,17 @@
           </div>
         </div>
       </div>
+      <div class="row py-2">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-group">
+                <input type="text" name="search" v-model="article.name" class="form-control" placeholder="Search" v-on:keyup="searchArticles()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <articles v-bind:articles_props="store.articles"></articles>
     </div>
   </div>
@@ -60,7 +71,8 @@
     name: 'show-store',
     data() {
       return {
-        store: {}
+        store: {},
+        article: {}
       }
     },
     mounted() {
@@ -68,26 +80,18 @@
     },
     methods: {
       getStore() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.id + '/articles',
-          method: 'get',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          if(response !== undefined){
+        this.$storeService.getStore(this.$route.params.id)
+          .then(response => {
             this.store = response.data.data.store;
-          }
-        });
+          });
       },
-      showNotification(){
+      searchArticles() {
+        this.$articleService.searchArticles(this.article)
+          .then(response => {
+            this.store.articles = response.data.data.articles;
+          });
+      },
+      showNotification() {
         swal('Are you sure?', "You really wanted to delete this store?", {
           buttons: {
             cancel: "No!",
@@ -110,25 +114,14 @@
           });
       },
       deleteStore() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.id,
-          method: 'delete',
-          responseType: 'json',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then( (response) => {
-          this.store = response.data.data.store;
-          this.$router.push('/store');
-        });
+        this.$storeService.deleteStore(this.$route.params.id)
+          .then(response => {
+            this.store = response.data.data.store;
+            this.$router.push('/store');
+          });
       }
-    },
+    }
+    ,
     components: {
       Articles
     }

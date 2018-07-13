@@ -44,43 +44,18 @@
     },
     methods: {
       getStore(){
-        const configAxios = {
-          url:'http://store-api.local/api/v1/services/stores/'+this.$route.params.id,
-          method:'get',
-          responseType:'json',
-          data:{},
-          headers:{
-            'Content-Type':'application/json',
-          },
-          auth:{
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then( (response) => {
-          this.store = response.data.data.store;
-        });
+        this.$storeService.getStore(this.$route.params.id)
+          .then(response => {
+            this.store = response.data.data.store;
+          });
       },
       putStore() {
-        const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/'+this.$route.params.id,
-          method: 'put',
-          responseType: 'json',
-          data: this.store,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          auth: {
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then((response) => {
-          this.store = response.data.data.store;
-          this.$router.push('/store/'+this.$route.params.id);
-          swal('Success','Store updated successfully','success');
-        });
-        //this.store = {};
+        this.$storeService.putStore(this.$route.params.id,this.store)
+          .then(response => {
+            this.store = response.data.data.store;
+            this.$router.push('/store/'+this.$route.params.id);
+            swal('Success','Store updated successfully','success');
+          });
       }
     },
     components:{

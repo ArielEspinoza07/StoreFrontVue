@@ -6,6 +6,10 @@ import router from './router';
 import axios from 'axios';
 import swal from 'sweetalert';
 
+// Services
+import StoreService from './services/StoreService'
+import ArticleService from "./services/ArticleService";
+
 
 Vue.config.productionTip = false;
 
@@ -21,6 +25,8 @@ axios.interceptors.response.use((response) => {
 });
 
 Vue.prototype.$axios = axios;
+Vue.prototype.$storeService = new StoreService(axios);
+Vue.prototype.$articleService = new ArticleService(axios);
 
 /* eslint-disable no-new */
 new Vue({

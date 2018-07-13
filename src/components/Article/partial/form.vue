@@ -36,10 +36,10 @@
       return {
       }
     },
-    mounted(){
+    created(){
 
     },
-    created(){
+    mounted(){
 
     },
     methods: {

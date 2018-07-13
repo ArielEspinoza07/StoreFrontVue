@@ -45,22 +45,10 @@
     },
     methods: {
       getStores(){
-        const configAxios = {
-          url:'http://store-api.local/api/v1/services/stores',
-          method:'get',
-          responseType:'json',
-          data:{},
-          headers:{
-            'Content-Type':'application/json',
-          },
-          auth:{
-            username: 'my_email',
-            password: '12345'
-          }
-        };
-        this.$axios.request(configAxios).then( (response) => {
-          this.stores = response.data.data.stores;
-        });
+        this.$storeService.getStores()
+          .then(response => {
+            this.stores = response.data.data.stores;
+          });
       }
     }
   }
