@@ -1,15 +1,31 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from './App'
-import router from './router'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import axios from 'axios';
+import swal from 'sweetalert';
 
-Vue.config.productionTip = false
+
+Vue.config.productionTip = false;
+
+axios.interceptors.response.use((response) => {
+  return response;
+}, (error) => {
+  if (error.response.status === 404) {
+    router.push('/404');
+  }
+  else if (error.response.status === 500) {
+    router.push('/500');
+  }
+});
+
+Vue.prototype.$axios = axios;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })

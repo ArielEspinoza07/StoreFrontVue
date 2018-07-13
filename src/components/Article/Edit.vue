@@ -34,7 +34,7 @@
                   <router-link :to="'/store/'+this.$route.params.id" class="nav-link">Articles</router-link>
                 </li>
                 <li class="nav-item">
-                  <router-link :to="'/store/'+store.id+'/article/new'" class="nav-link">New Article</router-link>
+                  <router-link :to="'/store/'+this.$route.params.storeId+'/article/new'" class="nav-link">New Article</router-link>
                 </li>
               </ul>
             </div>
@@ -56,6 +56,11 @@
                 <div class="col-lg-2 col-md-4 col-sm-6 col-6">
                   <button class="btn btn-outline-success" v-on:click="putArticle">Submit</button>
                 </div>
+                <div class="">
+                  <router-link :to="'/store/'+article.store_id+'/article/'+article.id" class="btn btn-outline-secondary">
+                    Back
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -66,7 +71,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+
   import formPartial from './partial/form'
 
   export default {
@@ -84,7 +89,7 @@
     methods: {
       getStore() {
         const configAxios = {
-          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.id,
+          url: 'http://store-api.local/api/v1/services/stores/' + this.$route.params.storeId,
           method: 'get',
           responseType: 'json',
           data: {},
@@ -96,8 +101,8 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then((response) => {
-          this.store = response.data.store;
+        this.$axios.request(configAxios).then((response) => {
+          this.store = response.data.data.store;
         });
       },
       getArticle() {
@@ -114,8 +119,8 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then((response) => {
-          this.article = response.data.article;
+        this.$axios.request(configAxios).then((response) => {
+          this.article = response.data.data.article;
         });
       },
       putArticle() {
@@ -132,8 +137,10 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then((response) => {
-          this.article = response.data.article;
+        this.$axios.request(configAxios).then((response) => {
+          this.article = response.data.data.article;
+          this.$router.push('/store/' + this.article.store_id);
+          swal('Success','Article updated successfully','success');
         });
         //this.store = {};
       }

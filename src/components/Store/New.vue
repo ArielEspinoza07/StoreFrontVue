@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+
   import formPartial from './partial/form'
 
   export default {
@@ -54,9 +54,10 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then((response) => {
-          console.log(response);
+        this.$axios.request(configAxios).then((response) => {
           this.store = {};
+          this.$router.push('/store');
+          swal('Success','Store created successfully','success');
         });
 
       }

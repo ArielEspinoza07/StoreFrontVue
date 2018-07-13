@@ -66,7 +66,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+
   import formPartial from './partial/form'
 
   export default {
@@ -97,8 +97,8 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then((response) => {
-          this.store = response.data.store;
+        this.$axios.request(configAxios).then((response) => {
+          this.store = response.data.data.store;
         });
       },
       postArticle() {
@@ -115,10 +115,12 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then((response) => {
+        this.$axios.request(configAxios).then((response) => {
           this.article = {
             store_id:this.$route.params.id
           };
+          this.$router.push('/store/' + this.article.store_id);
+          swal('Success','Article created successfully','success');
         });
       }
     },

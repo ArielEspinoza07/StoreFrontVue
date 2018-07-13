@@ -29,11 +29,9 @@
             <div class="card-footer">
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                  <router-link :to="'/store/article/edit/'+article.id" class="btn btn-outline-success">Edit
+                  <router-link :to="'/store/'+article.store_id+'/article/'+article.id" class="btn btn-outline-success">
+                    Show Article
                   </router-link>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                  <a href="#" class="btn btn-outline-danger">Delete</a>
                 </div>
               </div>
             </div>

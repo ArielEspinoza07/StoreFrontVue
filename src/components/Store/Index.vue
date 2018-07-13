@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+
 
   export default {
     name: 'stores',
@@ -58,8 +58,8 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then( (response) => {
-          this.stores = response.data.stores;
+        this.$axios.request(configAxios).then( (response) => {
+          this.stores = response.data.data.stores;
         });
       }
     }

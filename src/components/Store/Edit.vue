@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
+
   import formPartial from './partial/form'
 
   export default {
@@ -57,8 +57,8 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then( (response) => {
-          this.store = response.data.store;
+        this.$axios.request(configAxios).then( (response) => {
+          this.store = response.data.data.store;
         });
       },
       putStore() {
@@ -75,8 +75,10 @@
             password: '12345'
           }
         };
-        axios.request(configAxios).then((response) => {
-          this.stores = response.data.stores;
+        this.$axios.request(configAxios).then((response) => {
+          this.store = response.data.data.store;
+          this.$router.push('/store/'+this.$route.params.id);
+          swal('Success','Store updated successfully','success');
         });
         //this.store = {};
       }

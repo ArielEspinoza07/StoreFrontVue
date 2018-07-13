@@ -9,6 +9,10 @@ import ShowStore from '@/components/Store/Show'
 
 import NewArticle from '@/components/Article/New'
 import EditArticle from '@/components/Article/Edit'
+import ShowArticle from '@/components/Article/Show'
+
+import Error404 from '@/components/Errors/404'
+import Error500 from '@/components/Errors/500'
 
 Vue.use(Router)
 
@@ -45,9 +49,24 @@ export default new Router({
       component:NewArticle
     },
     {
-      path:'/store/article/edit/:id',
+      path:'/store/:storeId/article/edit/:id',
       name:'edit-article',
       component:EditArticle
+    },
+    {
+      path:'/store/:storeId/article/:id',
+      name:'show-article',
+      component:ShowArticle
+    },
+    {
+      path:'/404',
+      name:'error-404',
+      component:Error404
+    },
+    {
+      path:'/500',
+      name:'error-500',
+      component:Error500
     }
   ],
   mode:'history'
