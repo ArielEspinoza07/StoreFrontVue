@@ -20,9 +20,10 @@ class StoreService extends RestService {
     };
   }
 
-  getStores() {
+  getStores(params = {}) {
     this.configAxios.url = this.baseUrl;
     this.configAxios.method = 'get';
+    this.configAxios.params = params;
 
     return this.request(this.configAxios);
   }

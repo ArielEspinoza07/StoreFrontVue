@@ -58,7 +58,53 @@
           </div>
         </div>
       </div>
+      <div class="row py-3" >
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <nav >
+                <ul class="pagination justify-content-center">
+                  <li :class="( ( (pagination.current_page - 1) == 0 ) ) ? 'page-item disabled ' : 'page-item'" >
+                    <a class="page-link" href="#" tabindex="-1"
+                       v-on:click="searchPageArticles((pagination.current_page - 1))">Previous</a>
+                  </li>
+                  <li v-for="page in pagination.total_pages" :key="page" :class="( pagination.current_page === page ) ? 'page-item active' : 'page-item'">
+                    <a class="page-link" v-on:click="searchPageArticles(page)" href="#">{{page}}</a>
+                  </li>
+                  <li :class="( ( (pagination.current_page + 1) > pagination.last_page ) ) ? 'page-item disabled ' : 'page-item'">
+                    <a class="page-link" href="#"
+                       v-on:click="searchPageArticles((pagination.current_page + 1))">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
       <articles v-bind:articles_props="store.articles"></articles>
+      <div class="row py-3" >
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <nav >
+                <ul class="pagination justify-content-center">
+                  <li :class="( ( (pagination.current_page - 1) == 0 ) ) ? 'page-item disabled ' : 'page-item'" >
+                    <a class="page-link" href="#" tabindex="-1"
+                       v-on:click="searchPageArticles((pagination.current_page - 1))">Previous</a>
+                  </li>
+                  <li v-for="page in pagination.total_pages" :key="page" :class="( pagination.current_page === page ) ? 'page-item active' : 'page-item'">
+                    <a class="page-link" v-on:click="searchPageArticles(page)" href="#">{{page}}</a>
+                  </li>
+                  <li :class="( ( (pagination.current_page + 1) > pagination.last_page ) ) ? 'page-item disabled ' : 'page-item'">
+                    <a class="page-link" href="#"
+                       v-on:click="searchPageArticles((pagination.current_page + 1))">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -72,7 +118,12 @@
     data() {
       return {
         store: {},
-        article: {}
+        article: {
+          limit: 6,
+          order: 'created_at',
+          by: 'desc'
+        },
+        pagination: {}
       }
     },
     mounted() {
@@ -83,12 +134,15 @@
         this.$storeService.getStore(this.$route.params.id)
           .then(response => {
             this.store = response.data.data.store;
+            this.article.store_id = this.store.id;
+            this.searchArticles();
           });
       },
       searchArticles() {
-        this.$articleService.searchArticles(this.article)
+        this.$articleService.getArticles(this.article)
           .then(response => {
             this.store.articles = response.data.data.articles;
+            this.pagination = response.data.data.pagination;
           });
       },
       showNotification() {
@@ -119,7 +173,15 @@
             this.store = response.data.data.store;
             this.$router.push('/store');
           });
-      }
+      },
+      searchPageArticles(page) {
+        this.article.page = page;
+        this.$articleService.getArticles(this.article)
+          .then(response => {
+            this.store.articles = response.data.data.articles;
+            this.pagination = response.data.data.pagination;
+          });
+      },
     }
     ,
     components: {

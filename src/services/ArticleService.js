@@ -20,17 +20,10 @@ class ArticleService extends RestService{
     };
   }
 
-  getArticles() {
+  getArticles(params = {}) {
     this.configAxios.url = this.baseUrl;
     this.configAxios.method = 'get';
-
-    return this.request(this.configAxios);
-  }
-
-  searchArticles(data) {
-    this.configAxios.url = this.baseUrl;
-    this.configAxios.method = 'get';
-    this.configAxios.params = data;
+    this.configAxios.params = params;
 
     return this.request(this.configAxios);
   }
