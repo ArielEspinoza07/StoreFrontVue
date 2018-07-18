@@ -1,40 +1,36 @@
 <template>
-  <div class="row py-2">
+  <div class="row py-3">
     <div class="col-12">
-      <div class="card-deck">
-        <div class="col-lg-4 col-md-6 col-sm-6 col-12 py-2" v-for="article in articles_props" :key="article.id">
-          <div class="card">
-            <div class="card-header text-center">{{article.name}}</div>
-            <div class="card-body">
-              <div class="card-text">
-                <div class="row">
-                  <div class="col-12">
-                    <p>Description: {{article.description}}</p>
-                  </div>
-                  <div class="col-12">
-                    <p>Price: ${{article.price}}</p>
-                  </div>
-                  <div class="col-12">
-                    <p>Total in shelf: {{article.total_in_shelf}}</p>
-                  </div>
-                  <div class="col-12">
-                    <p>Total in vault: {{article.total_in_vault}}</p>
-                  </div>
-                  <div class="col-12">
-                    <p>Created at: {{article.created_at}}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                  <router-link :to="'/store/'+article.store_id+'/article/'+article.id" class="btn btn-outline-success">
-                    Show Article
-                  </router-link>
-                </div>
-              </div>
-            </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered table-striped ">
+              <caption>List of Stores</caption>
+              <thead class="thead-dark">
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price </th>
+                <th>Shelf </th>
+                <th>Vault </th>
+                <th>Created at</th>
+                <th>Options</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="article in articles_props" :key="article.id">
+                <td>{{article.name}}</td>
+                <td>{{article.description}}</td>
+                <td>${{article.price}}</td>
+                <td>{{article.total_in_shelf}}</td>
+                <td>{{article.total_in_vault}}</td>
+                <td>{{article.created_at}}</td>
+                <td>
+                  <router-link :to="'/store/'+article.store_id+'/article/'+article.id" class="btn btn-outline-primary">Show</router-link>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

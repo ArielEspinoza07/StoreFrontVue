@@ -12,49 +12,32 @@
           </div>
         </div>
       </div>
-      <div class="row py-3" >
+      <div class="row py-3">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <nav >
-                <ul class="pagination justify-content-center">
-                  <li :class="( ( (pagination.current_page - 1) == 0 ) ) ? 'page-item disabled ' : 'page-item'" >
-                    <a class="page-link" href="#" tabindex="-1"
-                       v-on:click="searchPageStores((pagination.current_page - 1))">Previous</a>
-                  </li>
-                  <li v-for="page in pagination.total_pages" :key="page" :class="( pagination.current_page === page ) ? 'page-item active' : 'page-item'">
-                    <a class="page-link" v-on:click="searchPageStores(page)" href="#">{{page}}</a>
-                  </li>
-                  <li :class="( ( (pagination.current_page + 1) > pagination.last_page ) ) ? 'page-item disabled ' : 'page-item'">
-                    <a class="page-link" href="#"
-                       v-on:click="searchPageStores((pagination.current_page + 1))">Next</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="card-deck">
-            <div class="col-lg-4 col-md-6 col-sm-12 col-12 py-2" v-for="store in stores" :key="store.id">
-              <div class="card"   >
-                <div class="card-header text-center">{{store.name}}</div>
-                <div class="card-body">
-                  <h5 class="card-title">Address: {{store.address}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Created at: {{store.created_at}}</h6>
-                  <p class="card-text"></p>
-                </div>
-                <div class="card-footer">
-                  <div class="row">
-                    <div class="row">
-                      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
-                        <router-link :to="'/store/'+store.id" class="btn btn-outline-success">Show Store</router-link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered table-striped ">
+                  <caption>List of Stores</caption>
+                  <thead class="thead-dark">
+                  <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Created at</th>
+                    <th>Options</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="store in stores" :key="store.id">
+                    <td>{{store.name}}</td>
+                    <td>{{store.address}}</td>
+                    <td>{{store.created_at}}</td>
+                    <td>
+                      <router-link :to="'/store/'+store.id" class="btn btn-outline-primary">Show</router-link>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
